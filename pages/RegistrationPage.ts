@@ -63,8 +63,8 @@ async acceptPrivacyPolicy(): Promise<void>{
 async clickContinue(): Promise<void>{
     await this.btnContinue.click();
 }
-async isConfirmationMessageDisplayed(): Promise<boolean>{
-    return await this.msgConfirmation.isVisible();
+async isConfirmationMessageDisplayed(): Promise<string>{
+            return await this.msgConfirmation.textContent() ?? '';
 }
 
 async completeRegistration(userData:{

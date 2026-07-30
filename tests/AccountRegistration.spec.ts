@@ -14,17 +14,47 @@ import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
 import { RegistrationPage } from '../pages/RegistrationPage';
 import { DataProvider } from '../utils/dataProvider';
-import { RandomDataGenerator } from '../utils/RandomDataGenerator';
-import {TestConfig} from '../config/test.config';
+import { RandomDataGenerator } from '../utils/randomDataGenerator'
+import { TestConfig } from '../test.config'
+import { config } from 'node:process';
+
+let homePage: HomePage;
+let regPage: RegistrationPage;
+
+test.beforeEach(async ({ page }) => {
+    const config = new TestConfig();
+    await page.goto(config.appUrl);
+    homePage = new HomePage(page);
+    regPage = new RegistrationPage(page);
+
+
+})
+
+test.afterEach(async({page})=>{
+    await page.close(); 
+})
 
 test('user registration test', async ({ page }) => {
-    const homePage = new HomePage(page);
-    const registrationPage = new RegistrationPage(page);
-    const testConfig = new TestConfig();
-    
-    await page.goto(testConfig.appUrl);
-    homePage.clickMyAccount();
-    registrationPage.clickRegister();
+
+
+    await homePage.clickMyAccount();
+    await homePage.clickRegister();
+    await regPage.setFirstName(RandomDataGenerator.getFirstName())
+    await regPage.setLastName(RandomDataGenerator.getRandomLastName())
+    await regPage.setEmail(RandomDataGenerator.getRandomEmail());
+    await regPage.setTelephone(RandomDataGenerator.getRandomPhoneNumber());
+    const password = RandomDataGenerator.getRandomPassword();
+    await regPage.setPassword(password);
+    await regPage.setConfirmPassword(password);
+    await regPage.acceptPrivacyPolicy();
+    await regPage.clickContinue();
+    const confirmationMessage = await regPage.isConfirmationMessageDisplayed();
+    console.log(confirmationMessage);
+    expect(confirmationMessage).toContain('Created!');
+    await page.waitForTimeout(3000);
+
+
+
 
 });
 
