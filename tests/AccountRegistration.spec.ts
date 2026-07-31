@@ -15,11 +15,11 @@ import { HomePage } from '../pages/HomePage';
 import { RegistrationPage } from '../pages/RegistrationPage';
 import { DataProvider } from '../utils/dataProvider';
 import { RandomDataGenerator } from '../utils/randomDataGenerator'
-import { TestConfig } from '../test.config'
-import { config } from 'node:process';
+import { TestConfig } from '../test.config';
 
 let homePage: HomePage;
 let regPage: RegistrationPage;
+let config:TestConfig; 
 
 test.beforeEach(async ({ page }) => {
     const config = new TestConfig();
@@ -34,7 +34,7 @@ test.afterEach(async({page})=>{
     await page.close(); 
 })
 
-test('user registration test', async ({ page }) => {
+test('user registration test @master @sanity @regression', async ({ page }) => {
 
 
     await homePage.clickMyAccount();
