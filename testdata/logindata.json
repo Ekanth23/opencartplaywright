@@ -1,8 +1,8 @@
 [
   {
     "testName": "Valid login",
-    "email": "pavanol@abc.com",
-    "password": "test@123",
+    "email": "autotestuser001@example.com",
+    "password": "12345",
     "expected": "success"
   },
   {
