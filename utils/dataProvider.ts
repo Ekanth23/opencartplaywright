@@ -2,11 +2,14 @@ import * as fs from 'fs';
 import { parse } from 'csv-parse/sync';
 export class DataProvider {
     static getDataFromJson(filePath: string): any {
-
-        let data:any = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        return data;
+         try{
+            let data=JSON.parse(fs.readFileSync(filePath,'utf-8'));
+            return data;
+        }catch(error){
+            console.error(`Error reading JSON file ${filePath}: ${error}`);
+            throw error;
+        }
     }
-
 
     static getTestDataFromCsv(filePath: string): any {
 

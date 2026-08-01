@@ -34,7 +34,7 @@ for (const data of jsonTestData) {
 }
 
 
-    //Load csv test datat logidata.josn
+    //Load csv test datat logidata.csv
     const csvPath = "testdata/logindata.csv";
     const csvTestData = DataProvider.getTestDataFromCsv(csvPath);
 
