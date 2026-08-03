@@ -20,11 +20,12 @@ for (const data of jsonTestData) {
 
         const loginPage = new LoginPage(page)
         loginPage.login(data.email, data.password);
-
+        page.pause(); 
         if (data.expected.toLowerCase() === 'success') {
+            page.pause();
             const myAccountPage = new MyAccountPage(page);
             const isLoggedIn = myAccountPage.isMyAccountPageExists();
-            expect(isLoggedIn).toBeTruthy();
+            expect(isLoggedIn).toBe(true);
         } else {
             const errorMess = await loginPage.getLoginErrorMessage();
             expect(errorMess).toContain('Warning: No match');
