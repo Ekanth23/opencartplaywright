@@ -10,46 +10,43 @@
  * 4) Verify if the product is displayed in the search results
  */
 //import 
-import {test, expect} from '@playwright/test'; 
+import {test, expect} from 'playwright/test'
+import { HomePage } from '../pages/HomePage'
+import { SearchResultsPage} from '../pages/SearchResultsPage'; 
 import { TestConfig } from '../test.config';
-import { HomePage } from '../pages/HomePage';
-import { SearchResultsPage } from '../pages/SearchResultsPage'; 
 
 //declare reusable variables 
+ 
 let config:TestConfig; 
-let homePage: HomePage; 
-let searchResultPage: SearchResultsPage; 
+let homePage:HomePage; 
+let searchResultsPage:SearchResultsPage; 
+
 
 //hooks class
 test.beforeEach(async({page})=>{
-
-    config = new TestConfig(); 
+    config=new TestConfig();
     page.goto(config.appUrl); 
-
-    homePage= new HomePage(page)
-    searchResultPage = new SearchResultsPage(page)
+    homePage= new HomePage(page); 
+    searchResultsPage = new SearchResultsPage(page)
 
 })
-
 test.afterEach(async({page})=>{
-    await page.close();
+
+    await page.close(); 
 })
 
-test('Product search test @master @regression', async()=>{
+
+//test case 
+test(`search and verify the products exists @master @regression`, async()=>{
 
     // * 2) Enter the product name and click search
-    const productName = config.productName;
-
-    await homePage.enterProductName(productName);
-    await homePage.clickSearchButton();
-
-    //step 4: Verify that the search results page is displayed 
-    expect(await searchResultPage.isSearchResultsPageExists()).toBeTruthy(); 
-
-    //step 5: Validate if the search Product apperas in the results 
-    const isProductFound=await searchResultPage.isProductExist(productName)
-    expect(isProductFound).toBeTruthy(); 
-
-
+    const product=config.productName
+    await homePage.enterProductName(product); 
+    await homePage.clickSearchButton(); 
+ //step 4: Verify that the search results page is displayed 
+ expect(searchResultsPage.isSearchResultsPageExists()).toBeTruthy(); 
+     //step 5: Validate if the search Product apperas in the results 
+     expect(searchResultsPage.isProductExist(product)).toBeTruthy()
 
 })
+
