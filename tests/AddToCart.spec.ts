@@ -14,56 +14,54 @@
  * 8. Verify the success message
  */
 
-//import 
-import { test, expect} from 'playwright/test'; 
+import { test, expect } from '@playwright/test';
 import { TestConfig } from '../test.config';
 import { HomePage } from '../pages/HomePage';
 import { SearchResultsPage } from '../pages/SearchResultsPage';
 import { ProductPage } from '../pages/ProductPage';
 
-
 // Shared instances
-let config:TestConfig
-let homePage:HomePage
-let searchResultsPage:SearchResultsPage; 
-let productPage:ProductPage;
+let config: TestConfig;
+let homePage: HomePage;
+let searchResultsPage: SearchResultsPage;
+let productPage: ProductPage;
 
+test.beforeEach(async ({ page }) => {
+  config = new TestConfig(); // Load test configuration
+  await page.goto(config.appUrl); // Step 1: Open application URL
 
+  // Initialize page objects
+  homePage = new HomePage(page);
+  searchResultsPage = new SearchResultsPage(page);
+  productPage=new ProductPage(page);
+});
 
-//hooks
-test.beforeEach(async({page})=>{
-  config = new TestConfig;
-  page.goto(config.appUrl) 
-  homePage = new HomePage(page)
-  searchResultsPage = new SearchResultsPage(page)
-  productPage = new ProductPage(page)
-})
-  //test
-  test(`search and verify the product and add the product to cart @master @regression`, async()=>{
+test.afterEach(async ({ page }) => {
+  await page.close(); // Optional cleanup
+});
 
+test('Add product to cart test @master @regression', async ({ page }) => {
   // Step 2: Enter product name in search box
-   const productName=config.productName
-   await homePage.enterProductName(productName)
-     // Step 3: Click the search button
-   await homePage.clickSearchButton(); 
+  await homePage.enterProductName(config.productName);
+
+  // Step 3: Click the search button
+  await homePage.clickSearch();
 
   // Step 4: Verify search results page is displayed
-  expect(searchResultsPage.isSearchResultsPageExists).toBeTruthy()
+  expect(await searchResultsPage.isSearchResultsPageExists()).toBeTruthy();
 
   // Step 5: Verify that the product exists in the results
-expect(await searchResultsPage.isProductExist(productName)).toBeTruthy
+  const productName = config.productName;
+  expect(await searchResultsPage.isProductExist(productName)).toBeTruthy();
 
   // Step 6-7-8: Select product → Set quantity → Add to cart → Verify confirmation
-  if(await searchResultsPage.isProductExist(productName))
-  {
-   await searchResultsPage.selectProduct(productName)
-   await productPage.setQuantity(config.productQuantity)
-   await productPage.addToCart(); 
-
-    
-  }
+  if (await searchResultsPage.isProductExist(productName)) {
+    //productPage = await searchResultsPage.selectProduct(productName);
+    await searchResultsPage.selectProduct(productName);
+    await productPage.setQuantity(config.productQuantity); // Set quantity
+    await productPage.addToCart();                         // Add to cart
 
     // Step 8: Assert success message is visible
-    expect(await productPage.isConfirmationMessageVisible()).toBeTruthy(); 
-  
+    expect(await productPage.isConfirmationMessageVisible()).toBeTruthy();
+  }
 });

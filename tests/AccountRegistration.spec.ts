@@ -10,53 +10,58 @@
  * 4) Agree to Privacy Policy and submit the form
  * 5) Validate the confirmation message
  */
+
 import { test, expect } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
 import { RegistrationPage } from '../pages/RegistrationPage';
-import { DataProvider } from '../utils/dataProvider';
-import { RandomDataGenerator } from '../utils/randomDataGenerator'
+import { RandomDataUtil } from '../utils/randomDataGenerator';
 import { TestConfig } from '../test.config';
 
 let homePage: HomePage;
-let regPage: RegistrationPage;
-let config:TestConfig; 
+let registrationPage: RegistrationPage;
+let config: TestConfig;
 
 test.beforeEach(async ({ page }) => {
-    const config = new TestConfig();
-    await page.goto(config.appUrl);
+    config = new TestConfig();
+    await page.goto(config.appUrl); //Navigate to application URL 
     homePage = new HomePage(page);
-    regPage = new RegistrationPage(page);
-
+    registrationPage = new RegistrationPage(page);
 
 })
 
-test.afterEach(async({page})=>{
-    await page.close(); 
+
+test.afterEach(async ({ page }) => {
+
+    await page.waitForTimeout(3000);
+    await page.close();
+
 })
 
-test('user registration test @master @sanity @regression', async ({ page }) => {
 
+test('User registration test @master @sanity @regression', async () => {
+
+    //Go to 'My Account' and click 'Register'
 
     await homePage.clickMyAccount();
     await homePage.clickRegister();
-    await regPage.setFirstName(RandomDataGenerator.getFirstName())
-    await regPage.setLastName(RandomDataGenerator.getRandomLastName())
-    await regPage.setEmail(RandomDataGenerator.getRandomEmail());
-    await regPage.setTelephone(RandomDataGenerator.getRandomPhoneNumber());
-    const password = RandomDataGenerator.getRandomPassword();
-    await regPage.setPassword(password);
-    await regPage.setConfirmPassword(password);
-    await regPage.acceptPrivacyPolicy();
-    await regPage.clickContinue();
-    const confirmationMessage = await regPage.isConfirmationMessageDisplayed();
-    console.log(confirmationMessage);
-    expect(confirmationMessage).toContain('Created!');
-    await page.waitForTimeout(3000);
+
+    //Fill in registration details with random data
+    await registrationPage.setFirstName(RandomDataUtil.getFirstName());
+    await registrationPage.setLastName(RandomDataUtil.getlastName());
+    await registrationPage.setEmail(RandomDataUtil.getEmail());
+    await registrationPage.setTelephone(RandomDataUtil.getPhoneNumber());
+
+    const password = RandomDataUtil.getPassword();
+    await registrationPage.setPassword(password);
+    await registrationPage.setConfirmPassword(password);
+
+    await registrationPage.acceptPrivacyPolicy;
+    await registrationPage.clickContinue();
+
+    //Validate the confirmation message
+
+    const confirmationMsg = await registrationPage.getConfirmationMessage;
+    expect(confirmationMsg).toContain('Your Account Has Been Created!')
 
 
-
-
-});
-
-
-
+})

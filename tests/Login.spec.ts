@@ -1,4 +1,3 @@
-
 /**
  * Test Case: Login with Valid Credentials
  * 
@@ -11,35 +10,35 @@
  * 4) Verify successful login by checking 'My Account' page presence
  */
 
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../pages/HomePage";
-import { LoginPage } from "../pages/LoginPage";
-import { MyAccountPage } from "../pages/MyAccountPage";
-import { TestConfig } from "../test.config";
+import { test, expect } from '@playwright/test';
+import { HomePage } from '../pages/HomePage';
+import { LoginPage } from '../pages/LoginPage';
+import { MyAccountPage } from '../pages/MyAccountPage';
+import { TestConfig } from '../test.config';
 
 let config: TestConfig;
 let homePage: HomePage;
 let loginPage: LoginPage;
-let myAccountPage: MyAccountPage
+let myAccountPage: MyAccountPage;
 
-//hooks 
+// This hook runs before each test
 test.beforeEach(async ({ page }) => {
-    config = new TestConfig; // Load config (URL, credentials)
-    await page.goto(config.appUrl); // Navigate to base URL
+  config = new TestConfig(); // Load config (URL, credentials)
+  await page.goto(config.appUrl); // Navigate to base URL
 
-    // Initialize page objects
-    homePage = new HomePage(page);
-    loginPage = new LoginPage(page);
-    myAccountPage = new MyAccountPage(page);
-
+  // Initialize page objects
+  homePage = new HomePage(page);
+  loginPage = new LoginPage(page);
+  myAccountPage = new MyAccountPage(page);
 });
 
 // Optional cleanup after each test
 test.afterEach(async ({ page }) => {
-    await page.close(); // Close browser tab (good practice in local/dev run)
+  await page.close(); // Close browser tab (good practice in local/dev run)
 });
 
-test('User login test @master @sanity @regression', async () => {
+
+test('User login test @master @sanity @regression',async()=>{
 
     //Navigate to Login page via Home page
 
@@ -54,10 +53,8 @@ test('User login test @master @sanity @regression', async () => {
     //alternatevly
     //await loginPage.login(config.email,config.password);
 
-        //Verify successful login by checking 'My Account' page presence
+    //Verify successful login by checking 'My Account' page presence
     const isLoggedIn=await myAccountPage.isMyAccountPageExists();
-    expect(isLoggedIn).toBeTruthy(); 
+    expect(isLoggedIn).toBeTruthy();
 
 })
-
-
