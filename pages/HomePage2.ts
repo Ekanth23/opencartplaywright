@@ -23,6 +23,41 @@ export class HomePage2{
     }
 
     //actionMethods
+    //ishomePageExists 
+    async isHomePageExists():Promise<boolean>{
+        const homePageTitle=this.page.title()
+        if((await homePageTitle).includes('Your Store'))
+        {
+            return true
+        }
+        return false
+
+    }
+
+    //clickMyAccoutn 
+    async clickMyAccount()
+    {
+        await this.lnkMyAccout.click()
+    }
+    //clickRegister
+    async clickLogin()
+    {
+       await this.lnkLogin.click()
+    }
+    //clickLogin
+    async clickRegister()
+    {
+        await this.lnkRegister.click()
+    }
+    //enterProductName
+    async enterProductName(productname: string){
+        await this.txtSearch.fill(productname)
+    }
+    //clicSearchButton
+    async clickSearchButton()
+    {
+        await this.btnSearch.click()
+    }
 
     
 

@@ -47,11 +47,11 @@ test('User registration test @master @sanity @regression', async () => {
 
     //Fill in registration details with random data
     await registrationPage.setFirstName(RandomDataUtil.getFirstName());
-    await registrationPage.setLastName(RandomDataUtil.getlastName());
-    await registrationPage.setEmail(RandomDataUtil.getEmail());
-    await registrationPage.setTelephone(RandomDataUtil.getPhoneNumber());
+    await registrationPage.setLastName(RandomDataUtil.getRandomLastName());
+    await registrationPage.setEmail(RandomDataUtil.getRandomEmail());
+    await registrationPage.setTelephone(RandomDataUtil.getRandomPhoneNumber());
 
-    const password = RandomDataUtil.getPassword();
+    const password = RandomDataUtil.getRandomPassword();
     await registrationPage.setPassword(password);
     await registrationPage.setConfirmPassword(password);
 

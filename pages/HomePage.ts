@@ -62,7 +62,7 @@ export class HomePage{
             throw error;
         }
     }
-    async clickSearchButton(){
+    async           clickSearchButton(){
         try{
             await this.btnSearch.click();
         }catch(error){

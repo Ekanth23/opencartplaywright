@@ -1,5 +1,5 @@
 import {faker} from '@faker-js/faker';
-export class RandomDataGenerator{
+export class RandomDataUtil{
     static getFirstName(): string{
         return faker.person.firstName();
     }

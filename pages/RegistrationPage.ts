@@ -10,7 +10,7 @@ private readonly txtLastName: Locator
 private readonly txtEmail: Locator;
 private readonly txtTelephone: Locator  
 private readonly txtPassword: Locator;
-private readonly txtConfirmPassword: Locator
+private readonly txtConfirmPassword: Locator            
 private readonly chkPolicy: Locator;
 private readonly btnContinue: Locator;
 private readonly msgConfirmation: Locator;
