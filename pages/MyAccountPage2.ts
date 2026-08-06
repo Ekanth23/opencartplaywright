@@ -19,7 +19,7 @@ export class MyAccountPage2
     //constructor 
     constructor(page:Page)
     {
-        this.myAccountPageHeader = page.locator('#content h2')
+        this.myAccountPageHeader = page.locator('#content h2').nth(1)
         this.lnkLogout = page.locator('#column-right a:last-of-type')
     }
 

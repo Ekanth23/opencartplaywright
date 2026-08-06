@@ -18,7 +18,7 @@ constructor(page:Page)
 //action methods
 async setEmail(email:string)
 {
-    await this.txtPassword.fill(email)
+    await this.txtUserName.fill(email)
 }
 
 async setPassword(password:string)

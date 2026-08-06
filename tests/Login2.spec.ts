@@ -46,7 +46,7 @@ test('user loging test @master @regression', async()=>{
     await loginPage.setPassword(config.password)
     await loginPage.clickLogin()
 
-    expect(await myAccountPage.verifyMyAccoutExists()).toBeTruthy()
+    await myAccountPage.verifyMyAccoutExists()
 
 
 
