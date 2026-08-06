@@ -2,7 +2,7 @@ import { Page, Locator } from "@playwright/test";
 
 export class RegistrationPage2{
 
-    private readonly page:Page
+   //  private readonly page:Page
 
     //private readeonly locators 
     private readonly regPageHeader: Locator
